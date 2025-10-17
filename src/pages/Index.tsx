@@ -5,6 +5,9 @@ import { Separator } from '@/components/ui/separator';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [tubeDiameter, setTubeDiameter] = useState('');
+  const [wellDiameter, setWellDiameter] = useState('');
+  const [calculatorResult, setCalculatorResult] = useState<any>(null);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -15,46 +18,110 @@ const Index = () => {
     {
       model: 'ЦЗН-114',
       outerDiameter: '114 мм',
+      outerDiameterNum: 114,
       innerDiameter: '73 мм',
       workingRange: '140-165 мм',
+      workingRangeMin: 140,
+      workingRangeMax: 165,
       weight: '1.8 кг'
     },
     {
       model: 'ЦЗН-168',
       outerDiameter: '168 мм',
+      outerDiameterNum: 168,
       innerDiameter: '127 мм',
       workingRange: '190-220 мм',
+      workingRangeMin: 190,
+      workingRangeMax: 220,
       weight: '3.2 кг'
     },
     {
       model: 'ЦЗН-219',
       outerDiameter: '219 мм',
+      outerDiameterNum: 219,
       innerDiameter: '168 мм',
       workingRange: '245-295 мм',
+      workingRangeMin: 245,
+      workingRangeMax: 295,
       weight: '5.1 кг'
     },
     {
       model: 'ЦЗН-273',
       outerDiameter: '273 мм',
+      outerDiameterNum: 273,
       innerDiameter: '219 мм',
       workingRange: '295-350 мм',
+      workingRangeMin: 295,
+      workingRangeMax: 350,
       weight: '7.8 кг'
     },
     {
       model: 'ЦЗН-324',
       outerDiameter: '324 мм',
+      outerDiameterNum: 324,
       innerDiameter: '273 мм',
       workingRange: '350-420 мм',
+      workingRangeMin: 350,
+      workingRangeMax: 420,
       weight: '11.2 кг'
     },
     {
       model: 'ЦЗН-426',
       outerDiameter: '426 мм',
+      outerDiameterNum: 426,
       innerDiameter: '340 мм',
       workingRange: '450-540 мм',
+      workingRangeMin: 450,
+      workingRangeMax: 540,
       weight: '18.5 кг'
     }
   ];
+
+  const calculateCentrator = () => {
+    const tube = parseFloat(tubeDiameter);
+    const well = parseFloat(wellDiameter);
+
+    if (!tube || !well || tube >= well) {
+      setCalculatorResult({ error: 'Проверьте введенные данные. Диаметр скважины должен быть больше диаметра трубы.' });
+      return;
+    }
+
+    const suitableModels = cznModels.filter(model => {
+      return model.outerDiameterNum === tube && well >= model.workingRangeMin && well <= model.workingRangeMax;
+    });
+
+    if (suitableModels.length > 0) {
+      const recommendedModel = suitableModels[0];
+      const gap = (well - tube) / 2;
+      const columnLength = 1000;
+      const spacing = 12;
+      const quantity = Math.ceil(columnLength / spacing);
+
+      setCalculatorResult({
+        success: true,
+        model: recommendedModel,
+        gap: gap.toFixed(1),
+        quantity,
+        spacing
+      });
+    } else {
+      const alternativeModels = cznModels.filter(model => {
+        return Math.abs(model.outerDiameterNum - tube) <= 50 && well >= model.workingRangeMin && well <= model.workingRangeMax;
+      });
+
+      if (alternativeModels.length > 0) {
+        setCalculatorResult({
+          alternative: true,
+          models: alternativeModels,
+          message: 'Точное совпадение не найдено, но подойдут следующие модели:'
+        });
+      } else {
+        setCalculatorResult({
+          error: 'Подходящая модель не найдена. Свяжитесь с отделом продаж для индивидуального решения.'
+        });
+      }
+    }
+  };
 
   const specifications = [
     { param: 'Материал пружин', value: 'Сталь 65Г, 60С2А' },
@@ -84,7 +151,7 @@ const Index = () => {
               <div className="text-sm text-gray-600">Центраторы заливки нефти</div>
             </div>
             <div className="hidden md:flex gap-8">
-              {['home', 'models', 'specs', 'advantages', 'docs', 'order'].map((section) => (
+              {['home', 'calculator', 'models', 'specs', 'advantages', 'docs', 'order'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -93,6 +160,7 @@ const Index = () => {
                   }`}
                 >
                   {section === 'home' && 'Главная'}
+                  {section === 'calculator' && 'Калькулятор'}
                   {section === 'models' && 'Модели'}
                   {section === 'specs' && 'Характеристики'}
                   {section === 'advantages' && 'Преимущества'}
@@ -151,6 +219,171 @@ const Index = () => {
                   <div className="text-3xl font-bold">ГОСТ</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section id="calculator" className="py-20 bg-gradient-to-br from-blue-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Калькулятор подбора ЦЗН</h2>
+            <p className="text-lg text-gray-600">
+              Введите параметры скважины и обсадной колонны для подбора подходящей модели
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <div className="bg-white rounded-lg border border-gray-200 p-8">
+              <h3 className="text-xl font-bold mb-6">Параметры</h3>
+              <div className="space-y-6">
+                <div>
+                  <label className="text-sm font-medium block mb-3">
+                    <Icon name="Circle" size={16} className="inline mr-2" />
+                    Диаметр обсадной трубы (мм)
+                  </label>
+                  <input
+                    type="number"
+                    value={tubeDiameter}
+                    onChange={(e) => setTubeDiameter(e.target.value)}
+                    placeholder="Например: 219"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-black text-lg"
+                  />
+                  <div className="mt-2 text-xs text-gray-600">
+                    Стандартные диаметры: 114, 168, 219, 273, 324, 426 мм
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium block mb-3">
+                    <Icon name="Circle" size={16} className="inline mr-2" />
+                    Диаметр скважины (мм)
+                  </label>
+                  <input
+                    type="number"
+                    value={wellDiameter}
+                    onChange={(e) => setWellDiameter(e.target.value)}
+                    placeholder="Например: 270"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-black text-lg"
+                  />
+                  <div className="mt-2 text-xs text-gray-600">
+                    Внутренний диаметр скважины или предыдущей колонны
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={calculateCentrator} 
+                  className="w-full" 
+                  size="lg"
+                  disabled={!tubeDiameter || !wellDiameter}
+                >
+                  <Icon name="Calculator" size={20} className="mr-2" />
+                  Рассчитать
+                </Button>
+              </div>
+
+              <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="flex items-start gap-2">
+                  <Icon name="Info" size={16} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-xs text-gray-700">
+                    <strong>Справка:</strong> Зазор между трубой и стенкой скважины должен составлять 
+                    минимум 25-30 мм для эффективного цементирования
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-8 min-h-[400px]">
+              <h3 className="text-xl font-bold mb-6">Результат подбора</h3>
+              
+              {!calculatorResult && (
+                <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+                  <Icon name="Calculator" size={64} className="mb-4 opacity-20" />
+                  <p className="text-center">Введите параметры и нажмите "Рассчитать"</p>
+                </div>
+              )}
+
+              {calculatorResult?.error && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <Icon name="AlertCircle" size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-medium text-red-900 mb-1">Ошибка расчета</div>
+                      <div className="text-sm text-red-700">{calculatorResult.error}</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {calculatorResult?.success && (
+                <div className="space-y-6">
+                  <div className="p-4 bg-green-50 border-2 border-green-500 rounded-lg">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Icon name="CheckCircle" size={24} className="text-green-600" />
+                      <div className="text-lg font-bold">Рекомендуемая модель</div>
+                    </div>
+                    <div className="text-3xl font-bold text-green-900 mb-2">
+                      {calculatorResult.model.model}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {calculatorResult.model.outerDiameter} / {calculatorResult.model.workingRange}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center py-3 border-b">
+                      <span className="text-gray-600">Зазор</span>
+                      <span className="font-bold">{calculatorResult.gap} мм</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b">
+                      <span className="text-gray-600">Масса центратора</span>
+                      <span className="font-bold">{calculatorResult.model.weight}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b">
+                      <span className="text-gray-600">Шаг установки</span>
+                      <span className="font-bold">{calculatorResult.spacing} м</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3">
+                      <span className="text-gray-600">Количество на 1000 м</span>
+                      <span className="font-bold text-lg">{calculatorResult.quantity} шт</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <Button className="w-full" variant="outline" onClick={() => scrollToSection('order')}>
+                      Заказать {calculatorResult.model.model}
+                      <Icon name="ArrowRight" size={18} className="ml-2" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {calculatorResult?.alternative && (
+                <div className="space-y-4">
+                  <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <Icon name="AlertTriangle" size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-yellow-900 mb-1">Альтернативные варианты</div>
+                        <div className="text-sm text-yellow-700">{calculatorResult.message}</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {calculatorResult.models.map((model: any, index: number) => (
+                      <div key={index} className="p-4 border border-gray-200 rounded-lg hover:border-black transition-colors">
+                        <div className="font-bold text-lg mb-1">{model.model}</div>
+                        <div className="text-sm text-gray-600">
+                          Труба: {model.outerDiameter} / Скважина: {model.workingRange}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
