@@ -11,47 +11,67 @@ const Index = () => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const products = [
+  const cznModels = [
     {
-      name: 'Центраторы жесткие',
-      diameter: 'Ø 114-508 мм',
-      application: 'Обсадные колонны, вертикальные скважины',
-      material: 'Сталь 20, сталь 09Г2С'
+      model: 'ЦЗН-114',
+      outerDiameter: '114 мм',
+      innerDiameter: '73 мм',
+      workingRange: '140-165 мм',
+      weight: '1.8 кг'
     },
     {
-      name: 'Центраторы пружинные',
-      diameter: 'Ø 168-426 мм',
-      application: 'Наклонно-направленные скважины',
-      material: 'Пружинная сталь 65Г'
+      model: 'ЦЗН-168',
+      outerDiameter: '168 мм',
+      innerDiameter: '127 мм',
+      workingRange: '190-220 мм',
+      weight: '3.2 кг'
     },
     {
-      name: 'Центраторы роликовые',
-      diameter: 'Ø 219-377 мм',
-      application: 'Горизонтальные участки, большие отклонения',
-      material: 'Сталь с полимерным покрытием'
+      model: 'ЦЗН-219',
+      outerDiameter: '219 мм',
+      innerDiameter: '168 мм',
+      workingRange: '245-295 мм',
+      weight: '5.1 кг'
     },
     {
-      name: 'Центраторы турбулизаторы',
-      diameter: 'Ø 140-340 мм',
-      application: 'Улучшение качества цементирования',
-      material: 'Композитные материалы'
+      model: 'ЦЗН-273',
+      outerDiameter: '273 мм',
+      innerDiameter: '219 мм',
+      workingRange: '295-350 мм',
+      weight: '7.8 кг'
+    },
+    {
+      model: 'ЦЗН-324',
+      outerDiameter: '324 мм',
+      innerDiameter: '273 мм',
+      workingRange: '350-420 мм',
+      weight: '11.2 кг'
+    },
+    {
+      model: 'ЦЗН-426',
+      outerDiameter: '426 мм',
+      innerDiameter: '340 мм',
+      workingRange: '450-540 мм',
+      weight: '18.5 кг'
     }
   ];
 
-  const advantages = [
-    'Соответствие ГОСТ 23527-2018',
-    'Производство на собственных мощностях',
-    'Техническое сопровождение проектов',
-    'Доставка на месторождения РФ',
-    'Сертификаты качества на всю продукцию',
-    'Индивидуальное изготовление под заказ'
+  const specifications = [
+    { param: 'Материал пружин', value: 'Сталь 65Г, 60С2А' },
+    { param: 'Материал корпуса', value: 'Сталь 20, 09Г2С' },
+    { param: 'Покрытие', value: 'Цинкование ГОСТ 9.307' },
+    { param: 'Температура эксплуатации', value: 'от -60°C до +120°C' },
+    { param: 'Осевая нагрузка', value: 'до 250 кН' },
+    { param: 'Восстанавливающая сила', value: '200-1500 Н' }
   ];
 
-  const applications = [
-    { title: 'Обсадные колонны', description: 'Центрирование труб при спуске в скважину' },
-    { title: 'Цементирование', description: 'Создание равномерного цементного кольца' },
-    { title: 'Горизонтальные участки', description: 'Снижение сил трения при спуске колонны' },
-    { title: 'Наклонные скважины', description: 'Предотвращение прихвата колонны' }
+  const advantages = [
+    'Высокая восстанавливающая сила пружин',
+    'Надежная фиксация на трубе',
+    'Минимальное сопротивление при спуске',
+    'Равномерное распределение нагрузки',
+    'Защита от коррозии',
+    'Длительный срок службы'
   ];
 
   return (
@@ -59,9 +79,12 @@ const Index = () => {
       <nav className="sticky top-0 z-50 bg-white border-b">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="text-lg font-medium">НефтеГазЦентратор</div>
+            <div className="flex items-center gap-3">
+              <div className="text-2xl font-bold">ЦЗН</div>
+              <div className="text-sm text-gray-600">Центраторы заливки нефти</div>
+            </div>
             <div className="hidden md:flex gap-8">
-              {['home', 'catalog', 'application', 'advantages', 'technical', 'contacts'].map((section) => (
+              {['home', 'models', 'specs', 'advantages', 'docs', 'order'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -70,111 +93,197 @@ const Index = () => {
                   }`}
                 >
                   {section === 'home' && 'Главная'}
-                  {section === 'catalog' && 'Каталог'}
-                  {section === 'application' && 'Применение'}
+                  {section === 'models' && 'Модели'}
+                  {section === 'specs' && 'Характеристики'}
                   {section === 'advantages' && 'Преимущества'}
-                  {section === 'technical' && 'Документация'}
-                  {section === 'contacts' && 'Контакты'}
+                  {section === 'docs' && 'Документация'}
+                  {section === 'order' && 'Заказ'}
                 </button>
               ))}
             </div>
-            <Button size="sm" variant="outline">Заказать</Button>
+            <Button size="sm" variant="outline">
+              <Icon name="Phone" size={16} className="mr-2" />
+              Связаться
+            </Button>
           </div>
         </div>
       </nav>
 
-      <section id="home" className="py-24 sm:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <div className="inline-block px-3 py-1 mb-6 text-xs font-medium border border-black">
-            ПРОИЗВОДИТЕЛЬ
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight mb-6">
-            Центраторы для обсадных<br />колонн нефтегазовых скважин
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl font-light leading-relaxed">
-            Производство и поставка центрирующих устройств для буровых работ. 
-            Полное соответствие ГОСТ, техническое сопровождение, доставка на объекты.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" variant="outline">
-              Скачать каталог PDF
-            </Button>
-            <Button size="lg" variant="outline">
-              Отправить запрос
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <Separator />
-
-      <section id="catalog" className="py-20">
+      <section id="home" className="py-20 sm:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Каталог продукции</h2>
-          <div className="space-y-6">
-            {products.map((product, index) => (
-              <div key={index} className="border border-gray-200 p-6">
-                <div className="grid md:grid-cols-4 gap-4 mb-4">
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Тип</div>
-                    <div className="font-medium">{product.name}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Диаметр</div>
-                    <div>{product.diameter}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Материал</div>
-                    <div>{product.material}</div>
-                  </div>
-                  <div className="flex items-end">
-                    <Button variant="outline" size="sm" className="w-full">
-                      Подробнее
-                    </Button>
-                  </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-xs font-medium border border-black">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                ГОСТ 23527-2018
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
+                Центраторы<br />ЦЗН
+              </h1>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Пружинные центраторы для центрирования обсадных колонн в наклонно-направленных 
+                и горизонтальных скважинах. Диаметры от 114 до 426 мм.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button size="lg">
+                  Скачать каталог
+                  <Icon name="Download" size={18} className="ml-2" />
+                </Button>
+                <Button size="lg" variant="outline">
+                  Получить прайс
+                </Button>
+              </div>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-8 border border-gray-200">
+              <div className="space-y-6">
+                <div>
+                  <div className="text-sm text-gray-600 mb-2">Диапазон диаметров</div>
+                  <div className="text-3xl font-bold">114-426 мм</div>
                 </div>
-                <div className="text-sm text-gray-600">
-                  <span className="font-medium">Применение:</span> {product.application}
+                <Separator />
+                <div>
+                  <div className="text-sm text-gray-600 mb-2">Модельный ряд</div>
+                  <div className="text-3xl font-bold">6 моделей</div>
+                </div>
+                <Separator />
+                <div>
+                  <div className="text-sm text-gray-600 mb-2">Соответствие</div>
+                  <div className="text-3xl font-bold">ГОСТ</div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
       <Separator />
 
-      <section id="application" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Области применения</h2>
-          <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
-            {applications.map((app, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-medium mb-2">{app.title}</h3>
-                <p className="text-gray-600">{app.description}</p>
-              </div>
-            ))}
+      <section id="models" className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Модельный ряд ЦЗН</h2>
+            <p className="text-lg text-gray-600">
+              Полная линейка центраторов для обсадных труб различных диаметров
+            </p>
           </div>
-          <div className="mt-12 pt-12 border-t border-gray-200">
-            <h3 className="text-lg font-medium mb-4">Основные функции центраторов</h3>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start">
-                <span className="mr-2">—</span>
-                <span>Центрирование обсадной колонны в стволе скважины</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2">—</span>
-                <span>Обеспечение равномерной толщины цементного кольца</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2">—</span>
-                <span>Снижение сил трения при спуске колонны</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2">—</span>
-                <span>Предотвращение прихвата труб в искривленных участках</span>
-              </li>
-            </ul>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2 border-black">
+                  <th className="text-left py-4 px-4 font-medium">Модель</th>
+                  <th className="text-left py-4 px-4 font-medium">Диаметр трубы</th>
+                  <th className="text-left py-4 px-4 font-medium">Внутренний Ø</th>
+                  <th className="text-left py-4 px-4 font-medium">Рабочий диапазон</th>
+                  <th className="text-left py-4 px-4 font-medium">Масса</th>
+                  <th className="text-right py-4 px-4 font-medium"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {cznModels.map((model, index) => (
+                  <tr key={index} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                    <td className="py-4 px-4">
+                      <div className="font-bold text-lg">{model.model}</div>
+                    </td>
+                    <td className="py-4 px-4">{model.outerDiameter}</td>
+                    <td className="py-4 px-4">{model.innerDiameter}</td>
+                    <td className="py-4 px-4">{model.workingRange}</td>
+                    <td className="py-4 px-4">{model.weight}</td>
+                    <td className="py-4 px-4 text-right">
+                      <Button variant="outline" size="sm">
+                        Заказать
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Icon name="Info" size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="font-medium mb-1">Индивидуальное производство</div>
+                <div className="text-sm text-gray-600">
+                  Возможно изготовление центраторов по индивидуальным параметрам под конкретные условия эксплуатации
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section id="specs" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <h2 className="text-3xl font-bold tracking-tight mb-12">Технические характеристики</h2>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white border border-gray-200 rounded-lg p-8">
+              <h3 className="text-xl font-bold mb-6">Общие параметры</h3>
+              <div className="space-y-4">
+                {specifications.map((spec, index) => (
+                  <div key={index} className="flex justify-between items-start py-3 border-b border-gray-100 last:border-0">
+                    <div className="text-sm text-gray-600 pr-4">{spec.param}</div>
+                    <div className="font-medium text-right">{spec.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-lg p-8">
+              <h3 className="text-xl font-bold mb-6">Область применения</h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <div className="font-medium mb-1">Наклонно-направленные скважины</div>
+                    <div className="text-sm text-gray-600">Углы искривления до 45°</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <div className="font-medium mb-1">Горизонтальные участки</div>
+                    <div className="text-sm text-gray-600">Большие отклонения от вертикали</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <div className="font-medium mb-1">Сложные геологические условия</div>
+                    <div className="text-sm text-gray-600">Неоднородные породы</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <div className="font-medium mb-1">Операции цементирования</div>
+                    <div className="text-sm text-gray-600">Обеспечение качественного цементного кольца</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 grid md:grid-cols-3 gap-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
+              <Icon name="Shield" size={32} className="mx-auto mb-3 text-gray-700" />
+              <div className="font-medium mb-1">Защита от коррозии</div>
+              <div className="text-sm text-gray-600">Цинковое покрытие по ГОСТ 9.307</div>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
+              <Icon name="Thermometer" size={32} className="mx-auto mb-3 text-gray-700" />
+              <div className="font-medium mb-1">Термостойкость</div>
+              <div className="text-sm text-gray-600">Работа при температуре до +120°C</div>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
+              <Icon name="Zap" size={32} className="mx-auto mb-3 text-gray-700" />
+              <div className="font-medium mb-1">Высокая прочность</div>
+              <div className="text-sm text-gray-600">Осевая нагрузка до 250 кН</div>
+            </div>
           </div>
         </div>
       </section>
@@ -183,43 +292,61 @@ const Index = () => {
 
       <section id="advantages" className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Преимущества</h2>
-          <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
+          <h2 className="text-3xl font-bold tracking-tight mb-12">Преимущества ЦЗН</h2>
+          <div className="grid sm:grid-cols-2 gap-8">
             {advantages.map((advantage, index) => (
-              <div key={index} className="flex items-start">
-                <div className="w-1.5 h-1.5 bg-black rounded-full mt-2.5 mr-3 flex-shrink-0" />
-                <span className="text-lg">{advantage}</span>
+              <div key={index} className="flex items-start gap-4 p-6 border border-gray-200 rounded-lg hover:border-black transition-colors">
+                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+                  {index + 1}
+                </div>
+                <div className="text-lg">{advantage}</div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-12 p-8 bg-gray-50 rounded-lg border border-gray-200">
+            <h3 className="text-xl font-bold mb-4">Почему выбирают ЦЗН</h3>
+            <div className="prose max-w-none text-gray-600">
+              <p className="mb-4">
+                Центраторы ЦЗН разработаны специально для работы в сложных условиях наклонно-направленных 
+                и горизонтальных скважин. Пружинная конструкция обеспечивает равномерное прижатие к стенкам 
+                скважины на всем протяжении обсадной колонны.
+              </p>
+              <p>
+                Производство осуществляется в соответствии с ГОСТ 23527-2018, что гарантирует высокое качество 
+                и надежность изделий. Каждая партия проходит контроль качества и комплектуется сертификатами соответствия.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <Separator />
 
-      <section id="technical" className="py-20 bg-gray-50">
+      <section id="docs" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Техническая документация</h2>
-          <div className="space-y-4">
+          <h2 className="text-3xl font-bold tracking-tight mb-12">Документация</h2>
+          <div className="grid sm:grid-cols-2 gap-6">
             {[
-              { name: 'Каталог продукции 2024', size: '2.4 МБ', format: 'PDF' },
-              { name: 'Технические характеристики', size: '1.8 МБ', format: 'PDF' },
-              { name: 'Сертификаты соответствия ГОСТ', size: '3.2 МБ', format: 'PDF' },
-              { name: 'Инструкция по монтажу', size: '1.1 МБ', format: 'PDF' },
-              { name: 'Таблица подбора центраторов', size: '0.9 МБ', format: 'XLSX' }
+              { name: 'Каталог ЦЗН 2024', size: '3.8 МБ', icon: 'FileText' },
+              { name: 'Технический паспорт', size: '1.2 МБ', icon: 'FileText' },
+              { name: 'Сертификат ГОСТ 23527-2018', size: '2.1 МБ', icon: 'Award' },
+              { name: 'Инструкция по монтажу', size: '1.6 МБ', icon: 'BookOpen' },
+              { name: 'Таблица типоразмеров', size: '0.8 МБ', icon: 'Table' },
+              { name: 'Протоколы испытаний', size: '4.2 МБ', icon: 'ClipboardCheck' }
             ].map((doc, index) => (
-              <div key={index} className="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
+              <div key={index} className="flex items-center justify-between p-6 bg-white border border-gray-200 rounded-lg hover:border-black transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 border border-gray-300 bg-white flex items-center justify-center text-xs font-medium">
-                    {doc.format}
+                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <Icon name={doc.icon as any} size={24} className="text-gray-600" />
                   </div>
                   <div>
-                    <div className="font-medium">{doc.name}</div>
+                    <div className="font-medium mb-1">{doc.name}</div>
                     <div className="text-sm text-gray-600">{doc.size}</div>
                   </div>
                 </div>
                 <Button variant="outline" size="sm">
-                  Скачать
+                  <Icon name="Download" size={16} />
                 </Button>
               </div>
             ))}
@@ -229,83 +356,155 @@ const Index = () => {
 
       <Separator />
 
-      <section id="contacts" className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Контакты и заказ</h2>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Отдел продаж</div>
-                <div className="text-lg">+7 (495) 789-01-23</div>
+      <section id="order" className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <h2 className="text-3xl font-bold tracking-tight mb-12">Заказ и поставка</h2>
+          
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div>
+              <div className="mb-8">
+                <h3 className="text-xl font-bold mb-6">Контактная информация</h3>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-black text-white rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Icon name="Phone" size={20} />
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600 mb-1">Отдел продаж</div>
+                      <div className="text-lg font-medium">+7 (800) 555-01-23</div>
+                      <div className="text-sm text-gray-600">Пн-Пт 9:00-18:00 МСК</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-black text-white rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Icon name="Mail" size={20} />
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600 mb-1">Email</div>
+                      <div className="text-lg font-medium">sales@czn-production.ru</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-black text-white rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Icon name="MapPin" size={20} />
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600 mb-1">Производство</div>
+                      <div className="text-lg font-medium">г. Пермь, ул. Промышленная, 125</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Email</div>
-                <div className="text-lg">sales@ngcentrator.ru</div>
-              </div>
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Производство</div>
-                <div className="text-lg">г. Нижневартовск, Промзона 3, стр. 42</div>
-              </div>
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Офис в Москве</div>
-                <div className="text-lg">г. Москва, Варшавское шоссе, 47</div>
+
+              <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 className="font-bold mb-3">Условия поставки</h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li className="flex items-start gap-2">
+                    <Icon name="Check" size={16} className="mt-0.5 flex-shrink-0" />
+                    <span>Минимальная партия: от 10 шт</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="Check" size={16} className="mt-0.5 flex-shrink-0" />
+                    <span>Срок производства: 7-14 дней</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="Check" size={16} className="mt-0.5 flex-shrink-0" />
+                    <span>Доставка по РФ транспортными компаниями</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="Check" size={16} className="mt-0.5 flex-shrink-0" />
+                    <span>Гарантия: 12 месяцев</span>
+                  </li>
+                </ul>
               </div>
             </div>
+
             <div>
-              <form className="space-y-4">
-                <div>
-                  <label className="text-sm text-gray-600 block mb-1">Компания</label>
-                  <input
-                    type="text"
-                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-600 block mb-1">Контактное лицо</label>
-                  <input
-                    type="text"
-                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-600 block mb-1">Телефон</label>
-                  <input
-                    type="tel"
-                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-600 block mb-1">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-600 block mb-1">Тип и количество центраторов</label>
-                  <textarea
-                    rows={3}
-                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent resize-none"
-                  />
-                </div>
-                <Button className="w-full mt-6" variant="outline">
-                  Отправить запрос
-                </Button>
-              </form>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-bold mb-6">Форма заказа</h3>
+                <form className="space-y-5">
+                  <div>
+                    <label className="text-sm font-medium block mb-2">Организация *</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black bg-white"
+                      placeholder="ООО «Компания»"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium block mb-2">Контактное лицо *</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black bg-white"
+                      placeholder="Иванов Иван Иванович"
+                    />
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium block mb-2">Телефон *</label>
+                      <input
+                        type="tel"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black bg-white"
+                        placeholder="+7 (___) ___-__-__"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium block mb-2">Email *</label>
+                      <input
+                        type="email"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black bg-white"
+                        placeholder="email@company.ru"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium block mb-2">Модель и количество *</label>
+                    <textarea
+                      rows={4}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black bg-white resize-none"
+                      placeholder="Например: ЦЗН-219 - 50 шт, ЦЗН-273 - 30 шт"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium block mb-2">Комментарий</label>
+                    <textarea
+                      rows={3}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black bg-white resize-none"
+                      placeholder="Дополнительные требования или вопросы"
+                    />
+                  </div>
+                  <Button className="w-full" size="lg">
+                    Отправить заявку
+                    <Icon name="Send" size={18} className="ml-2" />
+                  </Button>
+                  <p className="text-xs text-gray-600 text-center">
+                    Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="border-t py-12 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8">
+      <footer className="border-t py-12 bg-gray-900 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div>
-              <div className="text-lg font-medium mb-2">НефтеГазЦентратор</div>
-              <p className="text-sm text-gray-600">Производство центрирующих устройств для нефтегазовой отрасли</p>
+              <div className="text-2xl font-bold mb-2">ЦЗН</div>
+              <p className="text-sm text-gray-400">Производство центраторов заливки нефти</p>
             </div>
-            <div className="text-sm text-gray-600">
-              © 2024 НефтеГазЦентратор
+            <div className="flex gap-6 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
+              <a href="#" className="hover:text-white transition-colors">Реквизиты</a>
+            </div>
+            <div className="text-sm text-gray-400">
+              © 2024 ЦЗН Production
             </div>
           </div>
         </div>
