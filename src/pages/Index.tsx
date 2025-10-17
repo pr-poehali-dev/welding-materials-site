@@ -12,26 +12,46 @@ const Index = () => {
   };
 
   const products = [
-    'Электроды сварочные',
-    'Проволока сварочная',
-    'Флюсы сварочные',
-    'Газы защитные',
-    'Оборудование сварочное',
-    'Средства индивидуальной защиты'
+    {
+      name: 'Центраторы жесткие',
+      diameter: 'Ø 114-508 мм',
+      application: 'Обсадные колонны, вертикальные скважины',
+      material: 'Сталь 20, сталь 09Г2С'
+    },
+    {
+      name: 'Центраторы пружинные',
+      diameter: 'Ø 168-426 мм',
+      application: 'Наклонно-направленные скважины',
+      material: 'Пружинная сталь 65Г'
+    },
+    {
+      name: 'Центраторы роликовые',
+      diameter: 'Ø 219-377 мм',
+      application: 'Горизонтальные участки, большие отклонения',
+      material: 'Сталь с полимерным покрытием'
+    },
+    {
+      name: 'Центраторы турбулизаторы',
+      diameter: 'Ø 140-340 мм',
+      application: 'Улучшение качества цементирования',
+      material: 'Композитные материалы'
+    }
   ];
 
-  const services = [
-    { title: 'Поставка материалов', description: 'Комплексные поставки на месторождения' },
-    { title: 'Техническая поддержка', description: 'Консультации специалистов' },
-    { title: 'Логистика', description: 'Доставка на удаленные объекты' },
-    { title: 'Документация', description: 'Сертификаты и разрешения' }
+  const advantages = [
+    'Соответствие ГОСТ 23527-2018',
+    'Производство на собственных мощностях',
+    'Техническое сопровождение проектов',
+    'Доставка на месторождения РФ',
+    'Сертификаты качества на всю продукцию',
+    'Индивидуальное изготовление под заказ'
   ];
 
-  const projects = [
-    { name: 'Месторождение "Северное"', year: '2024', details: 'Поставка 50 тонн материалов' },
-    { name: 'НПЗ "Восток"', year: '2023', details: 'Комплексное оснащение цеха' },
-    { name: 'Трубопровод КТК', year: '2023', details: 'Сварочные работы 200 км' },
-    { name: 'Компрессорная станция', year: '2022', details: 'Монтаж оборудования' }
+  const applications = [
+    { title: 'Обсадные колонны', description: 'Центрирование труб при спуске в скважину' },
+    { title: 'Цементирование', description: 'Создание равномерного цементного кольца' },
+    { title: 'Горизонтальные участки', description: 'Снижение сил трения при спуске колонны' },
+    { title: 'Наклонные скважины', description: 'Предотвращение прихвата колонны' }
   ];
 
   return (
@@ -39,9 +59,9 @@ const Index = () => {
       <nav className="sticky top-0 z-50 bg-white border-b">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="text-lg font-medium">ПромСварка</div>
+            <div className="text-lg font-medium">НефтеГазЦентратор</div>
             <div className="hidden md:flex gap-8">
-              {['home', 'catalog', 'services', 'projects', 'certificates', 'about', 'contacts'].map((section) => (
+              {['home', 'catalog', 'application', 'advantages', 'technical', 'contacts'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -51,31 +71,33 @@ const Index = () => {
                 >
                   {section === 'home' && 'Главная'}
                   {section === 'catalog' && 'Каталог'}
-                  {section === 'services' && 'Услуги'}
-                  {section === 'projects' && 'Проекты'}
-                  {section === 'certificates' && 'Сертификаты'}
-                  {section === 'about' && 'О компании'}
+                  {section === 'application' && 'Применение'}
+                  {section === 'advantages' && 'Преимущества'}
+                  {section === 'technical' && 'Документация'}
                   {section === 'contacts' && 'Контакты'}
                 </button>
               ))}
             </div>
-            <Button size="sm" variant="outline">Связаться</Button>
+            <Button size="sm" variant="outline">Заказать</Button>
           </div>
         </div>
       </nav>
 
       <section id="home" className="py-24 sm:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="inline-block px-3 py-1 mb-6 text-xs font-medium border border-black">
+            ПРОИЗВОДИТЕЛЬ
+          </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight mb-6">
-            Сварочные материалы<br />для месторождений
+            Центраторы для обсадных<br />колонн нефтегазовых скважин
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl font-light leading-relaxed">
-            Комплексные поставки сварочного оборудования и материалов на промышленные объекты. 
-            Работаем с крупнейшими нефтегазовыми компаниями с 2010 года.
+            Производство и поставка центрирующих устройств для буровых работ. 
+            Полное соответствие ГОСТ, техническое сопровождение, доставка на объекты.
           </p>
           <div className="flex flex-wrap gap-4">
             <Button size="lg" variant="outline">
-              Скачать каталог
+              Скачать каталог PDF
             </Button>
             <Button size="lg" variant="outline">
               Отправить запрос
@@ -87,14 +109,32 @@ const Index = () => {
       <Separator />
 
       <section id="catalog" className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <h2 className="text-3xl font-light tracking-tight mb-12">Каталог продукции</h2>
-          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
+          <div className="space-y-6">
             {products.map((product, index) => (
-              <div key={index} className="py-4 border-b border-gray-200 last:border-0">
-                <div className="flex items-center justify-between">
-                  <span className="text-lg">{product}</span>
-                  <Icon name="ArrowRight" size={18} className="text-gray-400" />
+              <div key={index} className="border border-gray-200 p-6">
+                <div className="grid md:grid-cols-4 gap-4 mb-4">
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Тип</div>
+                    <div className="font-medium">{product.name}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Диаметр</div>
+                    <div>{product.diameter}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Материал</div>
+                    <div>{product.material}</div>
+                  </div>
+                  <div className="flex items-end">
+                    <Button variant="outline" size="sm" className="w-full">
+                      Подробнее
+                    </Button>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-600">
+                  <span className="font-medium">Применение:</span> {product.application}
                 </div>
               </div>
             ))}
@@ -104,14 +144,51 @@ const Index = () => {
 
       <Separator />
 
-      <section id="services" className="py-20">
+      <section id="application" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Услуги</h2>
-          <div className="space-y-8">
-            {services.map((service, index) => (
-              <div key={index} className="pb-8 border-b border-gray-200 last:border-0">
-                <h3 className="text-xl mb-2">{service.title}</h3>
-                <p className="text-gray-600">{service.description}</p>
+          <h2 className="text-3xl font-light tracking-tight mb-12">Области применения</h2>
+          <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            {applications.map((app, index) => (
+              <div key={index}>
+                <h3 className="text-lg font-medium mb-2">{app.title}</h3>
+                <p className="text-gray-600">{app.description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 pt-12 border-t border-gray-200">
+            <h3 className="text-lg font-medium mb-4">Основные функции центраторов</h3>
+            <ul className="space-y-2 text-gray-600">
+              <li className="flex items-start">
+                <span className="mr-2">—</span>
+                <span>Центрирование обсадной колонны в стволе скважины</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">—</span>
+                <span>Обеспечение равномерной толщины цементного кольца</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">—</span>
+                <span>Снижение сил трения при спуске колонны</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">—</span>
+                <span>Предотвращение прихвата труб в искривленных участках</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section id="advantages" className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h2 className="text-3xl font-light tracking-tight mb-12">Преимущества</h2>
+          <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
+            {advantages.map((advantage, index) => (
+              <div key={index} className="flex items-start">
+                <div className="w-1.5 h-1.5 bg-black rounded-full mt-2.5 mr-3 flex-shrink-0" />
+                <span className="text-lg">{advantage}</span>
               </div>
             ))}
           </div>
@@ -120,67 +197,32 @@ const Index = () => {
 
       <Separator />
 
-      <section id="projects" className="py-20">
+      <section id="technical" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Реализованные проекты</h2>
-          <div className="space-y-6">
-            {projects.map((project, index) => (
-              <div key={index} className="grid sm:grid-cols-3 gap-4 pb-6 border-b border-gray-200 last:border-0">
-                <div className="font-medium">{project.name}</div>
-                <div className="text-gray-600">{project.year}</div>
-                <div className="text-gray-600">{project.details}</div>
+          <h2 className="text-3xl font-light tracking-tight mb-12">Техническая документация</h2>
+          <div className="space-y-4">
+            {[
+              { name: 'Каталог продукции 2024', size: '2.4 МБ', format: 'PDF' },
+              { name: 'Технические характеристики', size: '1.8 МБ', format: 'PDF' },
+              { name: 'Сертификаты соответствия ГОСТ', size: '3.2 МБ', format: 'PDF' },
+              { name: 'Инструкция по монтажу', size: '1.1 МБ', format: 'PDF' },
+              { name: 'Таблица подбора центраторов', size: '0.9 МБ', format: 'XLSX' }
+            ].map((doc, index) => (
+              <div key={index} className="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 border border-gray-300 bg-white flex items-center justify-center text-xs font-medium">
+                    {doc.format}
+                  </div>
+                  <div>
+                    <div className="font-medium">{doc.name}</div>
+                    <div className="text-sm text-gray-600">{doc.size}</div>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm">
+                  Скачать
+                </Button>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <Separator />
-
-      <section id="certificates" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Сертификаты</h2>
-          <p className="text-lg text-gray-600 mb-8 font-light">
-            Все материалы имеют необходимые сертификаты соответствия и разрешительную документацию
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {['ISO 9001', 'ISO 14001', 'ГОСТ Р', 'Ростехнадзор'].map((cert, index) => (
-              <div key={index} className="text-center py-8 border border-gray-200 bg-white">
-                <div className="text-sm font-medium">{cert}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Separator />
-
-      <section id="about" className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">О компании</h2>
-          <div className="space-y-6 text-lg text-gray-600 font-light leading-relaxed">
-            <p>
-              Компания "ПромСварка" специализируется на комплексных поставках сварочных материалов 
-              и оборудования для нефтегазовой отрасли.
-            </p>
-            <p>
-              Мы работаем с крупнейшими месторождениями России и обеспечиваем бесперебойные поставки 
-              в самые удаленные регионы.
-            </p>
-          </div>
-          <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-gray-200">
-            <div>
-              <div className="text-3xl font-light mb-2">500+</div>
-              <div className="text-sm text-gray-600">Наименований</div>
-            </div>
-            <div>
-              <div className="text-3xl font-light mb-2">150+</div>
-              <div className="text-sm text-gray-600">Проектов</div>
-            </div>
-            <div>
-              <div className="text-3xl font-light mb-2">24/7</div>
-              <div className="text-sm text-gray-600">Поддержка</div>
-            </div>
           </div>
         </div>
       </section>
@@ -189,41 +231,65 @@ const Index = () => {
 
       <section id="contacts" className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-light tracking-tight mb-12">Контакты</h2>
+          <h2 className="text-3xl font-light tracking-tight mb-12">Контакты и заказ</h2>
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div>
-                <div className="text-sm text-gray-600 mb-1">Телефон</div>
-                <div className="text-lg">+7 (495) 123-45-67</div>
+                <div className="text-sm text-gray-600 mb-1">Отдел продаж</div>
+                <div className="text-lg">+7 (495) 789-01-23</div>
               </div>
               <div>
                 <div className="text-sm text-gray-600 mb-1">Email</div>
-                <div className="text-lg">info@promsvarka.ru</div>
+                <div className="text-lg">sales@ngcentrator.ru</div>
               </div>
               <div>
-                <div className="text-sm text-gray-600 mb-1">Адрес</div>
-                <div className="text-lg">г. Москва, ул. Промышленная, 15</div>
+                <div className="text-sm text-gray-600 mb-1">Производство</div>
+                <div className="text-lg">г. Нижневартовск, Промзона 3, стр. 42</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600 mb-1">Офис в Москве</div>
+                <div className="text-lg">г. Москва, Варшавское шоссе, 47</div>
               </div>
             </div>
             <div>
               <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Ваше имя"
-                  className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
-                />
-                <textarea
-                  placeholder="Сообщение"
-                  rows={4}
-                  className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent resize-none"
-                />
+                <div>
+                  <label className="text-sm text-gray-600 block mb-1">Компания</label>
+                  <input
+                    type="text"
+                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm text-gray-600 block mb-1">Контактное лицо</label>
+                  <input
+                    type="text"
+                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm text-gray-600 block mb-1">Телефон</label>
+                  <input
+                    type="tel"
+                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm text-gray-600 block mb-1">Email</label>
+                  <input
+                    type="email"
+                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm text-gray-600 block mb-1">Тип и количество центраторов</label>
+                  <textarea
+                    rows={3}
+                    className="w-full px-0 py-3 border-0 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent resize-none"
+                  />
+                </div>
                 <Button className="w-full mt-6" variant="outline">
-                  Отправить
+                  Отправить запрос
                 </Button>
               </form>
             </div>
@@ -235,11 +301,11 @@ const Index = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8">
             <div>
-              <div className="text-lg font-medium mb-2">ПромСварка</div>
-              <p className="text-sm text-gray-600">Сварочные материалы для промышленности</p>
+              <div className="text-lg font-medium mb-2">НефтеГазЦентратор</div>
+              <p className="text-sm text-gray-600">Производство центрирующих устройств для нефтегазовой отрасли</p>
             </div>
             <div className="text-sm text-gray-600">
-              © 2024 ПромСварка
+              © 2024 НефтеГазЦентратор
             </div>
           </div>
         </div>
